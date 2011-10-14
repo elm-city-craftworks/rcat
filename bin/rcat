@@ -10,4 +10,6 @@ args = OptionParser.new do |parser|
   parser.on("-s") { params[:squeeze]        = true               }
 end.parse(ARGV)
 
-p [params, args]
+File.foreach(args.first).with_index do |line, number|
+  puts "#{(number+1).to_s.rjust(6)}  #{line}"
+end
