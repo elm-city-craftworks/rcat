@@ -23,12 +23,31 @@ module RCat
 
   class Display
     def initialize(params)
-      @params = params
+      @line_numbering = params[:line_numbering]
+      @squeeze        = params[:squeeze]
     end
 
     def render_file(filename)
-      # intentionally using print instead of puts here.
-      File.foreach(filename) { |line| print line }
+      @current_line = 1
+      File.foreach(filename) { |line| render_line(line) }
+    end
+
+    def render_line(line)
+      case @line_numbering
+      when :all_lines
+        print "#{@current_line.to_s.rjust(6)}  #{line}" 
+        @current_line += 1
+      when :significant_lines
+        if line.chomp.empty?
+          print line
+        else
+          print "#{@current_line.to_s.rjust(6)}  #{line}" 
+          @current_line += 1
+        end
+      else
+        print line
+        @current_line += 1
+      end
     end
   end
 end
