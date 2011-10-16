@@ -28,25 +28,45 @@ module RCat
     end
 
     def render_file(filename)
-      @current_line = 1
-      File.foreach(filename) { |line| render_line(line) }
+      @line_number = 1
+
+      File.open(filename) do |f|
+        lines = f.lines
+        loop { render_line(lines) }
+      end
     end
 
-    def render_line(line)
+    def render_line(lines)
+      line = lines.next
+
+      current_line_empty = line.chomp.empty?
+
       case @line_numbering
       when :all_lines
-        print "#{@current_line.to_s.rjust(6)}  #{line}" 
-        @current_line += 1
+        print "#{@line_number.to_s.rjust(6)}  #{line}" 
+        @line_number += 1
       when :significant_lines
-        if line.chomp.empty?
+        if current_line_empty
           print line
         else
-          print "#{@current_line.to_s.rjust(6)}  #{line}" 
-          @current_line += 1
+          print "#{@line_number.to_s.rjust(6)}  #{line}" 
+          @line_number += 1
         end
       else
         print line
-        @current_line += 1
+        @line_number += 1
+      end
+
+      if @squeeze && current_line_empty 
+        loop do
+          next_line = lines.peek
+
+          if next_line.chomp.empty?
+            lines.next
+          else
+            break
+          end
+        end
       end
     end
   end
