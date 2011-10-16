@@ -1,15 +1,6 @@
 #!/usr/bin/env ruby
 
 require "optparse"
+require_relative "../lib/rcat"
 
-params = {}
-
-args = OptionParser.new do |parser|
-  parser.on("-n") { params[:line_numbering] = :all_lines         }
-  parser.on("-b") { params[:line_numbering] = :significant_lines }
-  parser.on("-s") { params[:squeeze]        = true               }
-end.parse(ARGV)
-
-File.foreach(args.first).with_index do |line, number|
-  puts "#{(number+1).to_s.rjust(6)}  #{line}"
-end
+RCat::Application.new(ARGV).run
