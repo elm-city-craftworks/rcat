@@ -108,6 +108,7 @@ unless cat_process.exitstatus == 1 && rcat_process.exitstatus == 1
   fail "Failed 'cat and rcat exit codes match on bad file"
 end
 
+# NOTE: rcat deviates slightly from cat in its output, but is still similar
 unless rcat_err == "rcat: No such file or directory - some_invalid_file\n"
   fail "Failed 'cat and rcat error messages match on bad file'"
 end
@@ -122,6 +123,7 @@ unless cat_process.exitstatus == 1 && rcat_process.exitstatus == 1
   fail "Failed 'cat and rcat exit codes match on bad switch"
 end
 
+# NOTE: rcat deviates slightly from cat in its output, but is still similar
 unless rcat_err == "rcat: invalid option: -x\nusage: rcat [-bns] [file ...]\n"
   fail "Failed 'rcat provides usage instructions when given invalid option"
 end
