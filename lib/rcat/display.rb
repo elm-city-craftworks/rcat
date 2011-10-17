@@ -5,13 +5,11 @@ module RCat
       @squeeze        = params[:squeeze]
     end
 
-    def render_file(filename)
+    def render(data)
       @line_number = 1
 
-      File.open(filename) do |f|
-        lines = f.lines
-        loop { render_line(lines) }
-      end
+      lines = data.lines
+      loop { render_line(lines) }
     end
 
     def render_line(lines)
@@ -21,13 +19,13 @@ module RCat
 
       case @line_numbering
       when :all_lines
-        print "#{@line_number.to_s.rjust(6)}  #{line}" 
+        print "#{@line_number.to_s.rjust(6)}\t#{line}" 
         @line_number += 1
       when :significant_lines
         if current_line_empty
           print line
         else
-          print "#{@line_number.to_s.rjust(6)}  #{line}" 
+          print "#{@line_number.to_s.rjust(6)}\t#{line}" 
           @line_number += 1
         end
       else
