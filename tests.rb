@@ -1,3 +1,13 @@
+# Task: Implement the rcat utility and get these tests to pass on a system 
+# which has the UNIX cat command present
+
+# To see Gregory Brown's solution, see http://github.com/elm-city-craftworks/rcat
+# Feel free to publicly share your own solutions
+
+# If you want to see detailed commentary on how to solve this problem
+# please subscribe to the Practicing Ruby Journal ( practicingruby.com )
+# An article on this topic will be released on Tuesday 10/18.
+
 require "open3"
 
 working_dir = File.dirname(__FILE__)
@@ -10,6 +20,22 @@ cat_output  = `cat #{gettysburg_file}`
 rcat_output = `rcat #{gettysburg_file}`
 
 fail "Failed 'cat == rcat'" unless cat_output == rcat_output
+
+############################################################################
+
+cat_output  = `cat #{gettysburg_file} #{spaced_file}`
+rcat_output = `rcat #{gettysburg_file} #{spaced_file}`
+
+fail "Failed 'cat [f1 f2] == rcat [f1 f2]'" unless cat_output == rcat_output
+
+############################################################################
+
+cat_output  = `cat < #{spaced_file}`
+rcat_output = `rcat < #{spaced_file}`
+
+unless cat_output == rcat_output
+  fail "Failed 'cat < file == rcat < file" 
+end
 
 ############################################################################
 
@@ -55,13 +81,6 @@ fail "Failed 'cat -nbs == rcat -nbs'" unless cat_output == rcat_output
 
 ############################################################################
 
-cat_output  = `cat #{gettysburg_file} #{spaced_file}`
-rcat_output = `rcat #{gettysburg_file} #{spaced_file}`
-
-fail "Failed 'cat [f1 f2] == rcat [f1 f2]'" unless cat_output == rcat_output
-
-############################################################################
-
 cat_output  = `cat -ns #{gettysburg_file} #{spaced_file}`
 rcat_output = `rcat -ns #{gettysburg_file} #{spaced_file}`
 
@@ -76,15 +95,6 @@ rcat_output = `rcat -bs #{gettysburg_file} #{spaced_file}`
 
 unless cat_output == rcat_output
   fail "Failed 'cat -bs [f1 f2] == rcat -bs [f1 f2]'" 
-end
-
-############################################################################
-
-cat_output  = `cat < #{spaced_file}`
-rcat_output = `rcat < #{spaced_file}`
-
-unless cat_output == rcat_output
-  fail "Failed 'cat < file == rcat < file" 
 end
 
 ############################################################################
@@ -108,7 +118,6 @@ unless cat_process.exitstatus == 1 && rcat_process.exitstatus == 1
   fail "Failed 'cat and rcat exit codes match on bad file"
 end
 
-# NOTE: rcat deviates slightly from cat in its output, but is still similar
 unless rcat_err == "rcat: No such file or directory - some_invalid_file\n"
   fail "Failed 'cat and rcat error messages match on bad file'"
 end
@@ -123,7 +132,6 @@ unless cat_process.exitstatus == 1 && rcat_process.exitstatus == 1
   fail "Failed 'cat and rcat exit codes match on bad switch"
 end
 
-# NOTE: rcat deviates slightly from cat in its output, but is still similar
 unless rcat_err == "rcat: invalid option: -x\nusage: rcat [-bns] [file ...]\n"
   fail "Failed 'rcat provides usage instructions when given invalid option"
 end
