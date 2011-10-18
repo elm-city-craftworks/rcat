@@ -22,17 +22,17 @@ module RCat
 
       case line_numbering_style
       when :all_lines
-        labeled_line(current_line)
+        print_labeled_line(current_line)
         increment_line_number  
       when :significant_lines
         if current_line_is_blank
-          unlabeled_line(current_line)
+          print_unlabeled_line(current_line)
         else
-          labeled_line(current_line)
+          print_labeled_line(current_line)
           increment_line_number
         end
       else
-        unlabeled_line(current_line)
+        print_unlabeled_line(current_line)
       end
 
       if squeeze_extra_newlines && current_line_is_blank
@@ -40,11 +40,11 @@ module RCat
       end
     end
 
-    def labeled_line(line)
+    def print_labeled_line(line)
       print "#{line_number.to_s.rjust(6)}\t#{line}" 
     end
 
-    def unlabeled_line(line)
+    def print_unlabeled_line(line)
       print line
     end
 
