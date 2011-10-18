@@ -33,6 +33,7 @@ module RCat
         end
       else
         print_unlabeled_line(current_line)
+        increment_line_number
       end
 
       if squeeze_extra_newlines && current_line_is_blank
