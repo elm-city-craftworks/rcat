@@ -27,6 +27,7 @@ module RCat
       when :significant_lines
         if current_line_is_blank
           print_unlabeled_line(current_line)
+          # skip incrementing line number, want to only count significant lines
         else
           print_labeled_line(current_line)
           increment_line_number
