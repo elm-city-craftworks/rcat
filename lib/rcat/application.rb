@@ -19,9 +19,9 @@ module RCat
     def parse_options(argv)
       params = {}
       files  = OptionParser.new do |parser|
-        parser.on("-n") { params[:line_numbering] ||= :all_lines         }
-        parser.on("-b") { params[:line_numbering]   = :significant_lines }
-        parser.on("-s") { params[:squeeze]          = true               }
+        parser.on("-n") { params[:line_numbering_style] ||= :all_lines         }
+        parser.on("-b") { params[:line_numbering_style]   = :significant_lines }
+        parser.on("-s") { params[:squeeze_extra_newlines] = true               }
       end.parse(argv)
 
       [params, files]
