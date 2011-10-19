@@ -5,10 +5,7 @@ require_relative "../lib/rcat"
 begin
   RCat::Application.new(ARGV).run
 rescue Errno::ENOENT => err
-  STDERR.puts "rcat: #{err.message}"
-  exit(1)
+  abort "rcat: #{err.message}"
 rescue OptionParser::InvalidOption => err
-  STDERR.puts "rcat: #{err.message}"
-  STDERR.puts "usage: rcat [-bns] [file ...]"
-  exit(1)
+  abort "rcat: #{err.message}\nusage: rcat [-bns] [file ...]"
 end
