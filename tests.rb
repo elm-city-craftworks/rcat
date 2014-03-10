@@ -1,13 +1,6 @@
 # Task: Implement the rcat utility and get these tests to pass on a system 
 # which has the UNIX cat command present
 
-# To see Gregory Brown's solution, see http://github.com/elm-city-craftworks/rcat
-# Feel free to publicly share your own solutions
-
-# If you want to see detailed commentary on how to solve this problem
-# please subscribe to the Practicing Ruby Journal ( practicingruby.com )
-# An article on this topic will be released on Tuesday 10/18.
-
 require "open3"
 
 working_dir = File.dirname(__FILE__)
